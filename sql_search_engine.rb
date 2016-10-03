@@ -1,45 +1,32 @@
-require 'pg'
+require_relative 'zelda_database'
+require_relative 'hero_of_time_inventory'
 require_relative 'my_option_parser'
-
-def disable_notices(conn)
-  conn.exec('SET client_min_messages TO WARNING;')
-end
-
-def create_table(conn)
-  conn.exec(
-    'CREATE TABLE IF NOT EXISTS inventory (' \
-    'id SERIAL PRIMARY KEY,' \
-    'item VARCHAR, type VARCHAR,' \
-    'stock VARCHAR, wielder VARCHAR)'
-  )
-end
-
-def find_inventory(conn)
-  conn.exec('SELECT * FROM inventory')
-end
+require_relative 'items'
 
 def main
-  conn = PG.connect(dbname: 'lonk')
+  zdb = ZeldaDatabase.new
 
-  disable_notices(conn)
+  zdb.disable_notices
 
-  create_table(conn)
+  zdb.create_table
+
+  inventory = HeroOfTimeInventory.new(zdb)
+
+  items = inventory.find
 
   options = MyOptionParser.new.parse_options
 
-  item = HeroOfTimeInventory.new(conn)
-
-  inventory = find_inventory(conn)
-
-  item.find_items(options, inventory) if options.key? :find
-
-  item.add_item(options) if options.key? :add
-
-  item.display_inventory(inventory) if options.key? :display
-
-  item.edit_item(options) if options.key? :edit
-
-  item.remove_item(options) if options.key? :remove
+  # item = Items.new() do not pass things through?
+  #
+  # item.find_item(options, inventory) if options.key? :find
+  #
+  # item.add_item(options) if options.key? :add
+  #
+  # item.display_inventory(inventory) if options.key? :display
+  #
+  # item.edit_item(options) if options.key? :edit
+  #
+  # item.remove_item(options) if options.key? :remove
 end
 
 main if __FILE__ == $PROGRAM_NAME

@@ -1,7 +1,7 @@
 require 'optparse'
 require_relative 'hero_of_time_inventory'
 
-#
+# maybe create a parse class?
 class MyOptionParser
   def parse_options
     @options = {}
@@ -44,7 +44,7 @@ class MyOptionParser
 
   def parse_add_options
     @parser.on('-a', '--add ITEM') do |item|
-      @options[:add] = item
+      @options[:save] = item
     end
     initiate_other_options
   end
@@ -60,11 +60,16 @@ class MyOptionParser
     @parser.on('-e', '--edit ITEM') do |item|
       @options[:edit] = item
     end
+
+    @parser.on('-i', '--item ITEM') do |item|
+      @options[:item] = item
+    end
+
     initiate_other_options
   end
 
   def parse_remove_options
-    @parser.on('-rm', '--remove ITEM') do |item|
+    @parser.on('-r', '--remove ITEM') do |item|
       @options[:remove] = item
     end
     initiate_other_options

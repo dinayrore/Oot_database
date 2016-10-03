@@ -1,11 +1,10 @@
 #
-require 'pry'
 class HeroOfTimeInventory
   def initialize(conn)
     @conn = conn
   end
 
-  def find_items(options, inventory)
+  def find_item(options, inventory)
     database = @conn.exec('SELECT * FROM inventory ' \
     "WHERE item = '#{options[:find]}' OR type = '#{options[:type]}' " \
     "OR stock = '#{options[:stock]}' OR wielder = '#{options[:wielder]}' ")
@@ -34,17 +33,13 @@ class HeroOfTimeInventory
     end
   end
 
-# can't seem to figure out how to get this one to work
   def edit_item(options)
-    @conn.exec('UPDATE FROM inventory (item, type, stock, wielder)' \
-    "WHERE item = '#{options[:edit]}' AND type = '#{options[:type]}' " \
-    "AND stock = '#{options[:stock]}' AND wielder = '#{options[:wielder]}'")
+    @conn.exec("UPDATE inventory SET item = '#{options[:item]}', " \
+    "type = '#{options[:type]}', stock = '#{options[:stock]}', " \
+    "wielder = '#{options[:wielder]}' WHERE item = '#{options[:edit]}' ")
   end
 
-# error near item `exec': ERROR:  syntax error at or near "("
   def remove_item(options)
-    @conn.exec('DELETE FROM inventory(item, type, stock, wielder) ' \
-    "WHERE item = '#{options[:remove]}' AND type = '#{options[:type]}' " \
-    "AND stock = '#{options[:stock]}' AND wielder = '#{options[:wielder]}')")
+    @conn.exec("DELETE FROM inventory WHERE item = '#{options[:remove]}'")
   end
 end
