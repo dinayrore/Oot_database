@@ -1,17 +1,19 @@
 #
+require 'pry'
 class HeroOfTimeInventory
   def initialize(conn)
     @conn = conn
   end
 
   def find_items(options, inventory)
-    @conn.exec('SELECT id FROM inventory ' \
+    database = @conn.exec('SELECT * FROM inventory ' \
     "WHERE item = '#{options[:find]}' OR type = '#{options[:type]}' " \
     "OR stock = '#{options[:stock]}' OR wielder = '#{options[:wielder]}' ")
-# error no implicit conversion of Symbol or String into Integer
-    puts "item: '#{inventory[:display]}' |" \
-    "type: '#{inventory[:type]}' | stock: '#{inventory[:stock]}' |" \
-    "wielder: '#{inventory[:wielder]}' "
+    database.each do |item|
+      puts "id: #{item["id"]} | item: #{item["item"]} " \
+      "type: #{item["type"]} | stock: #{item["stock"]} " \
+      "wielder: #{item["wielder"]}"
+    end
   end
 
   def add_item(options)
@@ -23,13 +25,12 @@ class HeroOfTimeInventory
     "AND stock = '#{options[:stock]}' AND wielder = '#{options[:wielder]}')")
   end
 
-# same issue as find
   def display_inventory(inventory)
     database = @conn.exec('SELECT * FROM inventory')
     database.each do |item|
-      puts "id: #{inventory[:id]} | item: #{inventory[:display]} " \
-      "type: #{inventory[:type]} | stock: #{inventory[:stock]} " \
-      "wielder: #{inventory[:wielder]}"
+      puts "id: #{item["id"]} | item: #{item["item"]} " \
+      "type: #{item["type"]} | stock: #{item["stock"]} " \
+      "wielder: #{item["wielder"]}"
     end
   end
 
