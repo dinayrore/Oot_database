@@ -1,6 +1,5 @@
 require 'pg'
 require_relative 'my_option_parser'
-require 'pry'
 
 def disable_notices(conn)
   conn.exec('SET client_min_messages TO WARNING;')
@@ -15,6 +14,10 @@ def create_table(conn)
   )
 end
 
+def find_inventory(conn)
+  conn.exec('SELECT * FROM inventory')
+end
+
 def main
   conn = PG.connect(dbname: 'lonk')
 
@@ -26,11 +29,13 @@ def main
 
   item = HeroOfTimeInventory.new(conn)
 
-  item.find_items(options) if options.key? :find
+  inventory = find_inventory(conn)
+
+  item.find_items(options, inventory) if options.key? :find
 
   item.add_item(options) if options.key? :add
 
-  item.display_inventory(options) if options.key? :display
+  item.display_inventory(inventory) if options.key? :display
 
   item.edit_item(options) if options.key? :edit
 

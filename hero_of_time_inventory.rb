@@ -1,19 +1,17 @@
-require 'pry'
 #
 class HeroOfTimeInventory
   def initialize(conn)
     @conn = conn
   end
 
-  def find_items(options)
-    @conn.exec('SELECT * FROM inventory ORDER BY' \
-    "('SELECT id FROM inventory" \
-    "WHERE item = '#{options[:find]}' OR type = '#{options[:type]}'" \
-    "OR stock = '#{options[:stock]}' OR wielder = '#{options[:wielder]}')")
-
-    puts "id: #{inventory[:id]} | item: #{inventory[:display]} " \
-    "type: #{inventory[:type]} | stock: #{inventory[:stock]} " \
-    "wielder: #{inventory[:wielder]}"
+  def find_items(options, inventory)
+    @conn.exec('SELECT id FROM inventory ' \
+    "WHERE item = '#{options[:find]}' OR type = '#{options[:type]}' " \
+    "OR stock = '#{options[:stock]}' OR wielder = '#{options[:wielder]}' ")
+# error no implicit conversion of Symbol or String into Integer
+    puts "item: '#{inventory[:display]}' |" \
+    "type: '#{inventory[:type]}' | stock: '#{inventory[:stock]}' |" \
+    "wielder: '#{inventory[:wielder]}' "
   end
 
   def add_item(options)
@@ -25,7 +23,8 @@ class HeroOfTimeInventory
     "AND stock = '#{options[:stock]}' AND wielder = '#{options[:wielder]}')")
   end
 
-  def display_inventory(options)
+# same issue as find
+  def display_inventory(inventory)
     database = @conn.exec('SELECT * FROM inventory')
     database.each do |item|
       puts "id: #{inventory[:id]} | item: #{inventory[:display]} " \
@@ -34,15 +33,17 @@ class HeroOfTimeInventory
     end
   end
 
+# can't seem to figure out how to get this one to work
   def edit_item(options)
     @conn.exec('UPDATE FROM inventory (item, type, stock, wielder)' \
     "WHERE item = '#{options[:edit]}' AND type = '#{options[:type]}' " \
     "AND stock = '#{options[:stock]}' AND wielder = '#{options[:wielder]}'")
   end
 
+# error near item `exec': ERROR:  syntax error at or near "("
   def remove_item(options)
-    @conn.exec('DELETE FROM inventory (item, type, stock, wielder)' \
-    "WHERE item = '#{options[:remove]}' AND type = '#{options[:type]}'" \
+    @conn.exec('DELETE FROM inventory(item, type, stock, wielder) ' \
+    "WHERE item = '#{options[:remove]}' AND type = '#{options[:type]}' " \
     "AND stock = '#{options[:stock]}' AND wielder = '#{options[:wielder]}')")
   end
 end
