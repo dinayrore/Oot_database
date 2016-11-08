@@ -4,7 +4,7 @@ The program entitled 'sql_search_engine.rb' is a postgresql database program for
 
 While the functionality of this application is still in the works, the idea behind this assignment was to allow users to create a database from within the main application file ('sql_search_engine.rb') and pass through options utilizing option parser to seed data into the database.  
 
-The ultimate goal behind this assignment and similar repositories that followed (zelda_database, zelda_api) is to created the ultimate Zelda API! If you are interested in contributing to this project and further collaboration towards the complete development of a Zelda API, please contact me, fork this repository and/or make a pull request. 
+The ultimate goal behind this assignment and similar repositories that followed (zelda_database, zelda_api) is to create the ultimate Zelda API! If you are interested in contributing to this project and further collaboration towards the complete development of a Zelda API, please contact me, fork this repository and/or make a pull request. 
 
 
 ## Getting Started
