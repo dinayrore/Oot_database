@@ -1,6 +1,10 @@
 # OoT (Ocarina of Time) Database
 
-The program entitled 'sql_search_engine.rb' is a postgresql database program for the hero of time based on the Nintendo series game "The Legend of Zelda: Ocarina of Time." While the functionality of this application is still in the works, the idea behind this assignment was to allow users to create a database from within the main application file ('sql_search_engine.rb') and pass through options utilizing option parser to seed data into the database.  The ultimate goal behind this assignment and similar repositories that followed (zelda_database, zelda_api) is to created the ultimate Zelda API! If you are interested in contributing to this project and further collaboration towards the complete development of a Zelda API, please contact me, fork this repository and/or make a pull request. Happy coding! 
+The program entitled 'sql_search_engine.rb' is a postgresql database program for the hero of time based on the Nintendo series game "The Legend of Zelda: Ocarina of Time." 
+
+While the functionality of this application is still in the works, the idea behind this assignment was to allow users to create a database from within the main application file ('sql_search_engine.rb') and pass through options utilizing option parser to seed data into the database.  
+
+The ultimate goal behind this assignment and similar repositories that followed (zelda_database, zelda_api) is to created the ultimate Zelda API! If you are interested in contributing to this project and further collaboration towards the complete development of a Zelda API, please contact me, fork this repository and/or make a pull request. 
 
 
 ## Getting Started
@@ -40,7 +44,7 @@ Install postgresql using brew
 brew install postgresql
 ```
 
-Once you have completed the above installation processes your system should be ready to launch the program!
+Once you have completed the above installation processes your system is ready to launch the program!
 
 ### Deployment
 
